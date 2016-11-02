@@ -8,24 +8,21 @@ describe('API responds correctly to the four principal REST methods', () => {
 
   before('set up test files', () => {});
 
-  beforeEach('start test server', () => {});
-  afterEach('shut down test server', () => {});
+  // it('responds appropriately to GET directory requests', (req, res) => {
 
-  it('responds appropriately to GET directory requests', (req, res) => {
-
-    const request = {
-      method: 'GET',
-      url: '/store'
-    };
+  //   const request = {
+  //     method: 'GET',
+  //     url: '/store'
+  //   };
     
-    //match expected with actual directory content output
-    const response = app(req, res);
-    const testKey = 'You requested /store \npride_and_prejudice.json';
+  //   //match expected with actual directory content output
+  //   const response = app(req, res);
+  //   const testKey = 'You requested /store \npride_and_prejudice.json';
 
-    response = response(request, null);
+  //   response = response(request, null);
 
-    assert.equal(response, testKey);
-  });
+  //   assert.equal(response, testKey);
+  // });
 
   it('responds appropriately to GET file requests', () => {
     //match expected with actual file output
