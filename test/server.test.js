@@ -1,18 +1,30 @@
 const chai = require('chai');
 const assert = require('chai').assert;
 
-const server = require('../lib/server');
+const app = require('../lib/app');
 
 //Test server, router and request handlers
 describe('API responds correctly to the four principal REST methods', () => {
 
-  before('set up test directory and files', () => {});
+  before('set up test files', () => {});
 
   beforeEach('start test server', () => {});
   afterEach('shut down test server', () => {});
 
-  it('responds appropriately to GET directory requests', () => {
+  it('responds appropriately to GET directory requests', (req, res) => {
+
+    const request = {
+      method: 'GET',
+      url: '/store'
+    };
+    
     //match expected with actual directory content output
+    const response = app(req, res);
+    const testKey = 'You requested /store \npride_and_prejudice.json';
+
+    response = response(request, null);
+
+    assert.equal(response, testKey);
   });
 
   it('responds appropriately to GET file requests', () => {
