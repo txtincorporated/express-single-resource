@@ -2,7 +2,7 @@
   "name": "express-single-resource",
   "version": "1.0.0",
   "description": "simple express server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "mocha"
   },

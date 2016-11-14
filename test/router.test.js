@@ -8,7 +8,6 @@ const rimraf = require('rimraf');
 
 const app = require('../lib/app');
 
-//Test server, router and req handlers
 describe('API responds correctly to the four principal REST methods', () => {
 
   const filePath = path.resolve(__dirname, '../lib/store/test*');
@@ -17,7 +16,6 @@ describe('API responds correctly to the four principal REST methods', () => {
   after(rmv);
 
   const request = chai.request(app);
-
 
   const testPost = {
     title: 'test title one',
@@ -32,57 +30,78 @@ describe('API responds correctly to the four principal REST methods', () => {
 
   it('responds appropriately to GET directory requests', (done) => {
 
-    //match expected with actual directory content output
     request
       .get('/store')
       .then(res => {
         let body = '';
-        console.log('res.body: ', res.body);
         body = res.body;
-        assert.deepEqual(body.files, 'pride_and_prejudice.json\n');
+        assert.equal(body.files, '');
         done();
       })
       .catch(done);
+
   });
 
   it('responds appropriately to POST requests', (done) => {
-    //match expected with actual directory list after prescribed POST
+
     request
       .post('/store')
       .send(testPost)
       .then(res => {
         let body = '';
-        console.log('testPost.title: ', testPost.title);
-        console.log('res.body: ', res.body);
         body = res.body;
         assert.equal(body.fileName, testName);
         done();
       })
       .catch(done);
+
   });
 
   it('responds appropriately to GET file reqs', (done) => {
 
-    //match expected with actual file output
     request
       .get('/store/' + testName + '.json')
       .then(res => {
         let body = '';
-        console.log('res.body: ', res.body);
         body = res.body;
         assert.deepEqual(res.body, { title: 'test title one', author: 'test author1' });
         done();
       })
       .catch(done);
+
   });
 
-  it('responds appropriately to PUT requests', () => {
-    //match expected with actual file contents after prescribed PUT
+  it('responds appropriately to PUT requests', (done) => {
+
+    request
+      .put('/store/' + testName + '.json')
+      .send(testPut)
+      .then(res => {
+        let body = '';
+        body = res.body;
+        assert.equal(body.author, testPut.author);
+        done();
+      })
+      .catch(done);
+
   });
 
-  it('responds appropriately to DELETE requests', () => {
-    //match expectd with actual directory list after prescribed DELETE
-  });
+  it('responds appropriately to DELETE requests', (done) => {
 
+    request
+      .delete('/store/' + testName + '.json')
+      .catch(done);
+
+    request
+      .get('/store')
+      .then(res => {
+        let body = '';
+        body = res.body;
+        assert.equal(body.files, '');
+        done();
+      })
+      .catch(done);
+
+  });
 
 });
