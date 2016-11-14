@@ -18,6 +18,7 @@ describe('API responds correctly to the four principal REST methods', () => {
 
   const request = chai.request(app);
 
+
   const testPost = {
     title: 'test title one',
     author: 'test author1',
@@ -27,6 +28,7 @@ describe('API responds correctly to the four principal REST methods', () => {
     author: 'test author2',
   };
 
+  const testName = testPost.title.replace(/\s/g, '_');
 
   it('responds appropriately to GET directory requests', (done) => {
 
@@ -43,33 +45,36 @@ describe('API responds correctly to the four principal REST methods', () => {
       .catch(done);
   });
 
-  // it('responds appropriately to POST requests', (done) => {
-  //   //match expected with actual directory list after prescribed POST
-  //   request
-  //     .post('/store')
-  //     .send(testPost)
-  //     .then(res => {
-  //       let body = '';
-  //       console.log('testPost.title: ', testPost.title);
-  //       console.log('res.body: ', res.body);
-  //       body = res.body;
-  //       assert.equal(body.fileName, testPost.title.replace(/\s/g, '_'));
-  //       done();
-  //     })
-  //     .catch(done);
-  // });
+  it('responds appropriately to POST requests', (done) => {
+    //match expected with actual directory list after prescribed POST
+    request
+      .post('/store')
+      .send(testPost)
+      .then(res => {
+        let body = '';
+        console.log('testPost.title: ', testPost.title);
+        console.log('res.body: ', res.body);
+        body = res.body;
+        assert.equal(body.fileName, testName);
+        done();
+      })
+      .catch(done);
+  });
 
-  // it('responds appropriately to GET file reqs', (done) => {
+  it('responds appropriately to GET file reqs', (done) => {
 
-  //   //match expected with actual file output
-  //   request
-  //     .get(`/store/${sawyer.id}`)
-  //     .then(res => {
-  //       assert.deepEqual(res.body, {});
-  //       done();
-  //     })
-  //     .catch(done);
-  // });
+    //match expected with actual file output
+    request
+      .get('/store/' + testName + '.json')
+      .then(res => {
+        let body = '';
+        console.log('res.body: ', res.body);
+        body = res.body;
+        assert.deepEqual(res.body, { title: 'test title one', author: 'test author1' });
+        done();
+      })
+      .catch(done);
+  });
 
   it('responds appropriately to PUT requests', () => {
     //match expected with actual file contents after prescribed PUT
