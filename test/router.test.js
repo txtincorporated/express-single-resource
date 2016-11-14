@@ -34,28 +34,30 @@ describe('API responds correctly to the four principal REST methods', () => {
     request
       .get('/store')
       .then(res => {
+        let body = '';
         console.log('res.body: ', res.body);
-        assert.deepEqual(res.body, {});
+        body = res.body;
+        assert.deepEqual(body.files, 'pride_and_prejudice.json\n');
         done();
       })
       .catch(done);
   });
 
-  it('responds appropriately to POST requests', (done) => {
-    //match expected with actual directory list after prescribed POST
-    request
-      .post('/store')
-      .send(testPost)
-      .then(res => {
-        let body = '';
-        console.log('testPost.title: ', testPost.title);
-        console.log('res.body: ', res.body);
-        body = res.body;
-        assert.equal(body.fileName, testPost.title.replace(/\s/g, '_'));
-        done();
-      })
-      .catch(done);
-  });
+  // it('responds appropriately to POST requests', (done) => {
+  //   //match expected with actual directory list after prescribed POST
+  //   request
+  //     .post('/store')
+  //     .send(testPost)
+  //     .then(res => {
+  //       let body = '';
+  //       console.log('testPost.title: ', testPost.title);
+  //       console.log('res.body: ', res.body);
+  //       body = res.body;
+  //       assert.equal(body.fileName, testPost.title.replace(/\s/g, '_'));
+  //       done();
+  //     })
+  //     .catch(done);
+  // });
 
   // it('responds appropriately to GET file reqs', (done) => {
 
