@@ -18,13 +18,13 @@ describe('API responds correctly to the four principal REST methods', () => {
 
   const request = chai.request(app);
 
-  const sawyer = {
-    title: 'test Tom Sawyer',
-    author: 'Mark Twain',
+  const testPost = {
+    title: 'test title one',
+    author: 'test author1',
   }; 
-  const clemens = {
-    title: 'test Tom Sawyer',
-    author: 'Samuel Clemens',
+  const testPut = {
+    title: 'test title one',
+    author: 'test author2',
   };
 
 
@@ -45,11 +45,13 @@ describe('API responds correctly to the four principal REST methods', () => {
     //match expected with actual directory list after prescribed POST
     request
       .post('/store')
-      .send(sawyer)
+      .send(testPost)
       .then(res => {
-        // console.log('Body: ', res.body);
-        console.log('sawyer.title: ', sawyer.title);
-        assert.equal(res.fileName, 'test_Tom_Sawyer');
+        let body = '';
+        console.log('testPost.title: ', testPost.title);
+        console.log('res.body: ', res.body);
+        body = res.body;
+        assert.equal(body.fileName, testPost.title.replace(/\s/g, '_'));
         done();
       })
       .catch(done);
