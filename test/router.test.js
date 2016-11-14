@@ -49,7 +49,7 @@ describe('API responds correctly to the four principal REST methods', () => {
       .then(res => {
         // console.log('Body: ', res.body);
         console.log('sawyer.title: ', sawyer.title);
-        assert.equal(res.fileName, 'test.Tom_Sawyer');
+        assert.equal(res.fileName, 'test_Tom_Sawyer');
         done();
       })
       .catch(done);
