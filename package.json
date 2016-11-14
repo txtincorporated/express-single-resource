@@ -4,7 +4,10 @@
   "description": "simple express server",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint .",
+    "pretest":"npm run lint", 
+    "start":"node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +24,7 @@
   "homepage": "https://github.com/txtincorporated/express-single-resource#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.9.1",
+    "eslint": "^3.10.0",
     "mocha": "^3.1.2"
   },
   "dependencies": {
