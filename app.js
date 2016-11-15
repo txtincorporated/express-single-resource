@@ -2,9 +2,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const router = require('../routes/router');
-const bodyParser = require('./bodyParser');
-const errorHandler = require('../routes/error-handler');
 
 module.exports = app;
 
@@ -12,6 +9,25 @@ app.get('/favicon.ico', (req, res) => {
   const favicon = fs.createReadStream('favicon.ico');
   favicon.pipe(res);
 });
+
+function bodyParser(req, res) {
+
+  var body = '';
+
+  req.on('data', (chunk) => {
+    body += chunk;
+  });
+
+  req.on('end', () => {
+    if(body) {
+      req.body = JSON.parse(body);
+      console.log('body: ' + body);
+    }
+    onEnd(req, res);
+  });
+
+}
+
 
 app.use('/store', router);
 
