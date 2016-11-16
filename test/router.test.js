@@ -12,18 +12,16 @@ const app = require('../lib/app');
 describe('API responds correctly to the four principal REST methods', () => {
 
   const filePath = path.resolve(__dirname, '../lib/store/test*');
-  const rmv = rimraf(filePath, done);
+  const rmv = done => rimraf(filePath, done);
 
   before(done => {
-    console.log('filePath: ', filePath);
     mkPath = path.join(__dirname, '../lib/store');
     mkdirp(mkPath);
-    done();
     rmv(done);
   }
     );
 
-  after(done => rmv(done));
+  after(rmv);
 
   const request = chai.request(app);
 
@@ -52,66 +50,66 @@ describe('API responds correctly to the four principal REST methods', () => {
 
   });
 
-  // it('responds appropriately to POST requests', (done) => {
+  it('responds appropriately to POST requests', (done) => {
 
-  //   request
-  //     .post('/store')
-  //     .send(testPost)
-  //     .then(res => {
-  //       let body = '';
-  //       body = res.body;
-  //       assert.equal(body.fileName, testName);
-  //       done();
-  //     })
-  //     .catch(done);
-  //   done();
-  // });
+    request
+      .post('/store')
+      .send(testPost)
+      .then(res => {
+        let body = '';
+        body = res.body;
+        assert.equal(body.fileName, testName);
+        done();
+      })
+      .catch(done);
 
-  // it('responds appropriately to GET file reqs', (done) => {
+  });
 
-  //   request
-  //     .get('/store/' + testName + '.json')
-  //     .then(res => {
-  //       let body = '';
-  //       body = res.body;
-  //       assert.deepEqual(res.body, { title: 'test title one', author: 'test author1' });
-  //       done();
-  //     })
-  //     .catch(done);
+  it('responds appropriately to GET file reqs', (done) => {
 
-  // });
+    request
+      .get('/store/' + testName + '.json')
+      .then(res => {
+        let body = '';
+        body = res.body;
+        assert.deepEqual(res.body, { title: 'test title one', author: 'test author1' });
+        done();
+      })
+      .catch(done);
 
-  // it('responds appropriately to PUT requests', (done) => {
+  });
 
-  //   request
-  //     .put('/store/' + testName + '.json')
-  //     .send(testPut)
-  //     .then(res => {
-  //       let body = '';
-  //       body = res.body;
-  //       assert.equal(body.author, testPut.author);
-  //       done();
-  //     })
-  //     .catch(done);
+  it('responds appropriately to PUT requests', (done) => {
 
-  // });
+    request
+      .put('/store/' + testName + '.json')
+      .send(testPut)
+      .then(res => {
+        let body = '';
+        body = res.body;
+        assert.equal(body.author, testPut.author);
+        done();
+      })
+      .catch(done);
 
-  // it('responds appropriately to DELETE requests', (done) => {
+  });
 
-  //   request
-  //     .delete('/store/' + testName + '.json')
-  //     .catch(done);
+  it('responds appropriately to DELETE requests', (done) => {
 
-  //   request
-  //     .get('/store')
-  //     .then(res => {
-  //       let body = '';
-  //       body = res.body;
-  //       assert.equal(body.files, '');
-  //       done();
-  //     })
-  //     .catch(done);
+    request
+      .delete('/store/' + testName + '.json')
+      .catch(done);
 
-  // });
+    request
+      .get('/store')
+      .then(res => {
+        let body = '';
+        body = res.body;
+        assert.equal(body.files, '');
+        done();
+      })
+      .catch(done);
+
+  });
 
 });
