@@ -2,9 +2,12 @@
   "name": "express-single-resource",
   "version": "1.0.0",
   "description": "simple express server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,10 +24,13 @@
   "homepage": "https://github.com/txtincorporated/express-single-resource#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.9.1",
+    "chai-http": "^3.0.0",
+    "eslint": "^3.10.0",
+    "mkdirp": "^0.5.1",
     "mocha": "^3.1.2"
   },
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "sander": "^0.5.1"
   }
 }
